@@ -2,16 +2,29 @@ local M = {}
 
 M.treesitter = {
   ensure_installed = {
-    "vim",
     "lua",
+    "vim",
     "html",
     "css",
     "javascript",
     "typescript",
     "tsx",
-    "c",
     "markdown",
     "markdown_inline",
+    "dockerfile",
+    "json",
+    "json5",
+    "jsonc",
+    "python",
+    "rst",
+    "toml",
+    "yaml",
+    "go",
+    "gomod",
+    "gowork",
+    "gosum",
+    "sql",
+    "java",
   },
   indent = {
     enable = true,
@@ -23,40 +36,56 @@ M.treesitter = {
 
 M.mason = {
   ensure_installed = {
-    -- lua stuff
     "lua-language-server",
     "stylua",
-
-    -- web dev stuff
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
-    "deno",
     "prettier",
-
-    -- c/cpp stuff
-    "clangd",
-    "clang-format",
-
-    -- shell stuff
-    "shfmt",
+    "pyright",
+    "isort",
+    "black",
+    "json-lsp",
+    "goimports",
+    "gofumpt",
+    "ansible-language-server",
+    "ansible-lint",
+    "yamllint",
+    "yamlfmt",
   },
 }
 
--- git support in nvimtree
 M.nvimtree = {
   git = {
     enable = true,
   },
-
+  actions = {
+    open_file = {
+      window_picker = {
+        chars = "1234567890",
+      },
+    },
+  },
   renderer = {
+    group_empty = true,
     highlight_git = true,
+    highlight_modified = "all",
     icons = {
       show = {
         git = true,
       },
+      glyphs = {
+        folder = {
+          default = "󰉋",
+          open = "󰝰",
+        },
+      },
     },
   },
+}
+
+M.blankline = {
+  show_current_context_start = false,
 }
 
 return M

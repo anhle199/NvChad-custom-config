@@ -2,8 +2,76 @@ local overrides = require("custom.configs.overrides")
 
 ---@type NvPluginSpec[]
 local plugins = {
+  {
+    "anhle199/NvChad-base46",
+    branch = "v2.0",
+    build = function()
+      require("base46").load_all_highlights()
+    end,
+  },
 
-  -- Override plugin definition options
+  {
+    "anhle199/NvChad-ui",
+    branch = "v2.0",
+    lazy = false,
+  },
+
+  {
+    "anhle199/NvChad-nvterm",
+    init = function()
+      require("core.utils").load_mappings "nvterm"
+    end,
+    config = function(_, opts)
+      require "base46.term"
+      require("nvterm").setup(opts)
+    end,
+  },
+
+  {
+    "anhle199/NvChad-nvim-colorizer.lua",
+    event = "User FilePost",
+    config = function(_, opts)
+      require("colorizer").setup(opts)
+
+      -- execute colorizer as soon as possible
+      vim.defer_fn(function()
+        require("colorizer").attach_to_buffer(0)
+      end, 0)
+    end,
+  },
+
+  { "nvim-treesitter/nvim-treesitter",     opts = overrides.treesitter },
+  { "williamboman/mason.nvim",             opts = overrides.mason },
+  { "lukas-reineke/indent-blankline.nvim", opts = overrides.blankline },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function()
+      return require "custom.configs.telescope"
+    end,
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    opts = function()
+      return require "custom.configs.cmp"
+    end,
+  },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = overrides.nvimtree,
+    -- config = function(_, opts)
+    --   dofile(vim.g.base46_cache .. "nvimtree")
+
+    --   opts.on_attach = function(bufnr)
+    --     require("nvim-tree.api").config.mappings.default_on_attach(bufnr)
+    --     utils.load_mappings("nvimtree_on_attach", { buffer = bufnr })
+    --   end
+
+    --   require("nvim-tree").setup(opts)
+    -- end,
+  },
 
   {
     "neovim/nvim-lspconfig",
@@ -13,23 +81,6 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
-  -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
-  },
-
-  {
-    "nvim-tree/nvim-tree.lua",
-    opts = overrides.nvimtree,
-  },
-
-  -- Install a plugin
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
@@ -47,19 +98,28 @@ local plugins = {
     end,
   },
 
-  -- To make a plugin not be loaded
-  -- {
-  --   "NvChad/nvim-colorizer.lua",
-  --   enabled = false
-  -- },
+  {
+    "mg979/vim-visual-multi",
+    lazy = false,
+    event = "BufRead",
+    init = function()
+      vim.g.VM_maps = {
+        ["Find Under"] = "<C-d>",
+        ["Find Subword Under"] = "<C-d>",
+      }
+    end,
+  },
 
-  -- All NvChad plugins are lazy-loaded by default
-  -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
-  -- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
-  -- {
-  --   "mg979/vim-visual-multi",
-  --   lazy = false,
-  -- }
+  {
+    "b0o/SchemaStore.nvim",
+    version = false, -- last release is way too old
+  },
+
+  { "NvChad/base46",             enabled = false },
+  { "NvChad/ui",                 enabled = false },
+  { "NvChad/nvterm",             enabled = false },
+  { "NvChad/nvim-colorizer.lua", enabled = false },
+  { "folke/which-key.nvim",      enabled = false },
 }
 
 return plugins

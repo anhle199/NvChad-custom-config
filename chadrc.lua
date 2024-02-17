@@ -5,11 +5,30 @@ local M = {}
 local highlights = require "custom.highlights"
 
 M.ui = {
-  theme = "onedark",
-  theme_toggle = { "onedark", "one_light" },
+  theme = "vscode_dark",
+  theme_toggle = { "vscode_dark", "vscode_light" },
 
   hl_override = highlights.override,
   hl_add = highlights.add,
+
+  telescope = {
+    style = "bordered",
+  },
+
+  statusline = {
+    theme = "vscode_colored",
+  },
+
+  nvdash = {
+    header = {
+      "██╗  ██╗ ██████╗  █████╗ ███╗   ██╗ ██████╗      █████╗ ███╗   ██╗██╗  ██╗",
+      "██║  ██║██╔═══██╗██╔══██╗████╗  ██║██╔════╝     ██╔══██╗████╗  ██║██║  ██║",
+      "███████║██║   ██║███████║██╔██╗ ██║██║  ███╗    ███████║██╔██╗ ██║███████║",
+      "██╔══██║██║   ██║██╔══██║██║╚██╗██║██║   ██║    ██╔══██║██║╚██╗██║██╔══██║",
+      "██║  ██║╚██████╔╝██║  ██║██║ ╚████║╚██████╔╝    ██║  ██║██║ ╚████║██║  ██║",
+      "╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝",
+    },
+  },
 }
 
 M.plugins = "custom.plugins"
